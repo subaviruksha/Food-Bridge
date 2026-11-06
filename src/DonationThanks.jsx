@@ -141,7 +141,7 @@ export default function DonationThanks({ info, onReset }) {
           )
         })}
       </div>
-      <p className="mt-3 text-xs text-ink/50">Demo preview of how a real donation would be tracked.</p>
+      <p className="mt-3 text-xs text-ink/50">Donation Tracking.</p>
 
       <button onClick={onReset} className="mt-5 rounded-full border-2 border-ink px-6 py-2 font-semibold text-ink transition hover:bg-ink hover:text-white">Send another donation</button>
     </div>
