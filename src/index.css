@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&family=Young+Serif&display=swap');
+@import "tailwindcss";
+
+/*
+  Palette: white + black as the base. Green is only the brand/“go” colour (logo, main buttons, success).
+  Every other colour belongs to something in the story:
+    saffron = food, tomato = hunger / pickup, sky = organisations, leaf = delivered / volunteers.
+*/
+@theme {
+  --font-display: 'Young Serif', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Hind', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --color-ink: #141414;
+  --color-muted: #5B5A55;
+  --color-line: #E8E5DD;
+  --color-mist: #F6F4EF;
+
+  --color-leaf: #1E7A4C;
+  --color-leaf-deep: #155A38;
+  --color-leaf-soft: #E4F2EA;
+
+  --color-saffron: #F29A1F;
+  --color-saffron-deep: #A85A06;
+  --color-saffron-soft: #FEF1DB;
+
+  --color-tomato: #D9482B;
+  --color-tomato-soft: #FCE9E4;
+
+  --color-sky: #2A7DC0;
+  --color-sky-soft: #E3F0FA;
+}
+
+@layer base {
+  :root { color-scheme: light; }
+  html { scroll-behavior: smooth; background: #fff; }
+  body {
+    margin: 0;
+    background: #fff;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  #root { min-height: 100vh; overflow-x: clip; }
+
+  /* Young Serif only has one weight, so headings must not ask for bold (the browser would fake it). */
+  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 400; color: var(--color-ink); text-wrap: balance; letter-spacing: -0.01em; }
+  p { color: var(--color-muted); text-wrap: pretty; }
+  b, strong { font-weight: 600; }
+
+  a, button, input, textarea, select { -webkit-tap-highlight-color: transparent; }
+  :focus-visible { outline: 3px solid var(--color-ink); outline-offset: 3px; }
+  section { scroll-margin-top: 5rem; }
+  img, canvas, svg { max-width: 100%; }
+  button, a { touch-action: manipulation; }
+
+  input, textarea, select {
+    color: var(--color-ink);
+    background: #fff;
+    border: 1.5px solid #CFCBC0;
+    max-width: 100%;
+  }
+  input:focus, textarea:focus { border-color: var(--color-ink); outline: none; box-shadow: 0 0 0 3px rgba(20,20,20,.12); }
+  ::placeholder { color: #8C8A82; opacity: 1; }
+  ::selection { background: #FBD58F; color: #141414; }
+}
+
+@media (max-width: 767px) {
+  body { font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+.avatar {
+  --ring: #F29A1F;            /* ring and fallback colour */
+  --on: #141414;              /* colour of the initial letter */
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--ring);
+  color: var(--on);
+  font-family: 'Young Serif', Georgia, serif;
+  font-size: 1.9rem;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 6px var(--ring), 0 6px 14px rgba(20, 20, 20, .18);
+}
+
+.avatar__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 18%;   /* lower number = crop higher up the photo */
+  transform: scale(1.45);     /* zoom on the face; try 1.25 if too close */
+}
+
+.avatar--saffron { --ring: #F29A1F; --on: #141414; }
+.avatar--tomato  { --ring: #D9482B; --on: #fff; }
+.avatar--sky     { --ring: #2A7DC0; --on: #fff; }
