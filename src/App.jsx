@@ -174,6 +174,20 @@ export default function App() {
   const [sent, setSent] = useState(null)
   const [menuOpen, setMenuOpen] = useState(false)
 
+  // New states for Partner and Volunteer forms
+  const [activeContactForm, setActiveContactForm] = useState('')
+  const [contactSubmitted, setContactSubmitted] = useState(false)
+
+  const openContactForm = (role) => {
+    setActiveContactForm(role)
+    setContactSubmitted(false)
+  }
+
+  const closeContactForm = () => {
+    setActiveContactForm('')
+    setContactSubmitted(false)
+  }
+
   return (
     <>
       <Preloader />
@@ -329,18 +343,27 @@ export default function App() {
         </div>
       </Section>
 
-     <Section id="stories" tone="white" title="Community stories" lead="Meet the people a single donation can reach: the donor, the volunteer and the shelter.">
-  <StoriesPhone />
-</Section>
+      <Section id="stories" tone="white" title="Community stories" lead="Meet the people a single donation can reach: the donor, the volunteer and the shelter.">
+        <StoriesPhone />
+      </Section>
 
       <Section id="join" tone="mist" title="Would you like to take part?" lead="Choose how you’d like to help, or send us a food donation alert.">
         <div className="mt-12 grid gap-6 lg:grid-cols-2">
           <div className="grid gap-4">
-            {[['Volunteer', 'Give an evening and carry meals to those who need them.', 'mailto:volunteer@foodbridge.in'], ['Partner with us', 'NGOs and companies who want to scale rescue together.', 'mailto:partners@foodbridge.in']].map(([h, p, href]) => (
+            {[
+              ['Volunteer', 'Give an evening and carry meals to those who need them.'],
+              ['Partner with us', 'NGOs and companies who want to scale rescue together.'],
+            ].map(([h, p]) => (
               <Reveal key={h} className={`${card} p-7`}>
                 <h3 className="text-2xl">{h}</h3>
                 <p className="mb-4 mt-1">{p}</p>
-                <a href={href} className="inline-block rounded-full border-2 border-ink px-6 py-2 font-semibold text-ink no-underline transition hover:bg-ink hover:text-white">Get in touch</a>
+                <button
+                  type="button"
+                  onClick={() => openContactForm(h)}
+                  className="inline-block rounded-full border-2 border-ink px-6 py-2 font-semibold text-ink transition hover:bg-ink hover:text-white"
+                >
+                  Get in touch
+                </button>
               </Reveal>
             ))}
           </div>
@@ -375,6 +398,101 @@ export default function App() {
           </Reveal>
         </div>
       </Section>
+
+      {/* Partner / Volunteer registration popup */}
+      {activeContactForm && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-ink/60 p-4 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="contact-form-title"
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) closeContactForm()
+          }}
+        >
+          <div className="relative w-full max-w-md rounded-3xl border border-line bg-white p-6 shadow-2xl sm:p-8">
+            <button
+              type="button"
+              onClick={closeContactForm}
+              aria-label="Close form"
+              className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full bg-mist text-xl text-ink transition hover:bg-leaf hover:text-white"
+            >
+              ×
+            </button>
+
+            {contactSubmitted ? (
+              <div className="py-6 text-center">
+                <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-leaf-soft text-3xl text-leaf">✓</div>
+                <h3 className="mt-5 text-2xl font-semibold text-ink">Thank you for reaching out!</h3>
+                <p className="mt-3 leading-7 text-ink/70">
+                  Your {activeContactForm.toLowerCase()} interest has been noted.
+                  Our organisation will reach out to you soon.
+                </p>
+                <button
+                  type="button"
+                  onClick={closeContactForm}
+                  className="mt-6 rounded-full bg-leaf px-7 py-3 font-semibold text-white transition hover:bg-leaf-deep"
+                >
+                  Done
+                </button>
+              </div>
+            ) : (
+              <>
+                <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-leaf">
+                  Join FoodBridge
+                </p>
+                <h3 id="contact-form-title" className="pr-8 text-2xl font-semibold text-ink">
+                  {activeContactForm}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-ink/70">
+                  Share your details and our team will get in touch with you.
+                </p>
+
+                <form
+                  className="mt-6 grid gap-4"
+                  onSubmit={(e) => {
+                    e.preventDefault()
+                    setContactSubmitted(true)
+                  }}
+                >
+                  <label className="grid gap-1.5 text-sm font-semibold text-ink">
+                    Name
+                    <input
+                      required
+                      name="contactName"
+                      type="text"
+                      autoComplete="name"
+                      placeholder="Enter your name"
+                      className="w-full rounded-xl border border-line bg-white px-4 py-3 text-base font-normal outline-none transition focus:border-leaf focus:ring-2 focus:ring-leaf/20"
+                    />
+                  </label>
+
+                  <label className="grid gap-1.5 text-sm font-semibold text-ink">
+                    Gmail address
+                    <input
+                      required
+                      name="contactEmail"
+                      type="email"
+                      autoComplete="email"
+                      placeholder="you@gmail.com"
+                      pattern="[a-zA-Z0-9._%+-]+@gmail\\.com"
+                      title="Please enter a Gmail address ending in @gmail.com"
+                      className="w-full rounded-xl border border-line bg-white px-4 py-3 text-base font-normal outline-none transition focus:border-leaf focus:ring-2 focus:ring-leaf/20"
+                    />
+                  </label>
+
+                  <button
+                    type="submit"
+                    className="mt-2 rounded-full bg-leaf px-7 py-3 font-semibold text-white shadow-md shadow-leaf/20 transition hover:-translate-y-0.5 hover:bg-leaf-deep"
+                  >
+                    Submit
+                  </button>
+                </form>
+              </>
+            )}
+          </div>
+        </div>
+      )}
 
       <footer className="bg-ink px-4 py-12 text-white sm:px-6 sm:py-14">
         <div className="mx-auto grid max-w-6xl gap-8 sm:grid-cols-2 md:grid-cols-4">
