@@ -329,9 +329,9 @@ export default function App() {
         </div>
       </Section>
 
-      <Section id="stories" tone="white" title="A look at the people involved" lead="These sample stories show how a donation could move through the platform.">
-        <StoriesPhone />
-      </Section>
+     <Section id="stories" tone="white" title="Community stories" lead="Meet the people a single donation can reach: the donor, the volunteer and the shelter.">
+  <StoriesPhone />
+</Section>
 
       <Section id="join" tone="mist" title="Would you like to take part?" lead="Choose how you’d like to help, or send us a food donation alert.">
         <div className="mt-12 grid gap-6 lg:grid-cols-2">
