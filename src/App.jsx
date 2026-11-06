@@ -1,4 +1,3 @@
-
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { motion, animate, useInView } from 'framer-motion'
 import Community from './Community.jsx'
@@ -173,6 +172,7 @@ const impact = [
 export default function App() {
   const [sent, setSent] = useState(null)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [activeForm, setActiveForm] = useState(null)
 
   return (
     <>
@@ -329,22 +329,34 @@ export default function App() {
         </div>
       </Section>
 
-     <Section id="stories" tone="white" title="Community stories" lead="Meet the people a single donation can reach: the donor, the volunteer and the shelter.">
-  <StoriesPhone />
-</Section>
+      <Section id="stories" tone="white" title="Community stories" lead="Meet the people a single donation can reach: the donor, the volunteer and the shelter.">
+        <StoriesPhone />
+      </Section>
 
       <Section id="join" tone="mist" title="Would you like to take part?" lead="Choose how you’d like to help, or send us a food donation alert.">
         <div className="mt-12 grid gap-6 lg:grid-cols-2">
+
+          {/* Volunteer and Partner cards */}
           <div className="grid gap-4">
-            {[['Volunteer', 'Give an evening and carry meals to those who need them.', 'mailto:volunteer@foodbridge.in'], ['Partner with us', 'NGOs and companies who want to scale rescue together.', 'mailto:partners@foodbridge.in']].map(([h, p, href]) => (
+            {[
+              ['Volunteer', 'Give an evening and carry meals to those who need them.'],
+              ['Partner with us', 'NGOs and companies who want to scale rescue together.'],
+            ].map(([h, p]) => (
               <Reveal key={h} className={`${card} p-7`}>
                 <h3 className="text-2xl">{h}</h3>
                 <p className="mb-4 mt-1">{p}</p>
-                <a href={href} className="inline-block rounded-full border-2 border-ink px-6 py-2 font-semibold text-ink no-underline transition hover:bg-ink hover:text-white">Get in touch</a>
+                <button
+                  type="button"
+                  onClick={() => setActiveForm(h)}
+                  className="inline-block rounded-full border-2 border-ink px-6 py-2 font-semibold text-ink no-underline transition hover:bg-ink hover:text-white"
+                >
+                  Get in touch
+                </button>
               </Reveal>
             ))}
           </div>
 
+          {/* Existing donation form */}
           <Reveal className={`${card} p-7`}>
             {sent ? (
               <Suspense fallback={<div className="py-24 text-center text-muted">Sending…</div>}>
@@ -374,6 +386,108 @@ export default function App() {
             )}
           </Reveal>
         </div>
+
+       {/* Volunteer / Partner Form */}
+{activeForm && (
+  <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 px-4 backdrop-blur-sm">
+    <div className="w-full max-w-md rounded-3xl bg-white p-7 shadow-2xl">
+
+      {!sent ? (
+        <>
+          <div className="mb-5 flex items-center justify-between">
+            <h3 className="text-2xl font-semibold text-ink">
+              {activeForm}
+            </h3>
+
+            <button
+              type="button"
+              onClick={() => setActiveForm(null)}
+              className="text-2xl text-ink/60 hover:text-ink"
+            >
+              ×
+            </button>
+          </div>
+
+          <p className="mb-5 text-sm leading-6 text-ink/65">
+            Share your details and become a part of FoodBridge.
+          </p>
+
+          <form
+            className="grid gap-4"
+            onSubmit={(e) => {
+              e.preventDefault()
+
+              const f = new FormData(e.currentTarget)
+
+              setSent({
+                name: String(f.get('name') || ''),
+                type: activeForm,
+              })
+            }}
+          >
+            <label className="text-sm font-semibold text-ink">
+              Your Name
+              <input
+                type="text"
+                name="name"
+                required
+                placeholder="Enter your name"
+                className="mt-2 w-full rounded-xl border border-line px-4 py-3 font-normal"
+              />
+            </label>
+
+            <label className="text-sm font-semibold text-ink">
+              Gmail Address
+              <input
+                type="email"
+                name="email"
+                required
+                pattern="[a-zA-Z0-9._%+-]+@gmail\.com"
+                title="Please enter a valid Gmail address"
+                placeholder="example@gmail.com"
+                className="mt-2 w-full rounded-xl border border-line px-4 py-3 font-normal"
+              />
+            </label>
+
+            <button
+              type="submit"
+              className="mt-2 rounded-full bg-leaf px-6 py-3 font-semibold text-white shadow-md transition hover:bg-leaf-deep"
+            >
+              Submit
+            </button>
+          </form>
+        </>
+      ) : (
+        <div className="py-8 text-center">
+          <div className="mx-auto grid h-20 w-20 place-items-center rounded-full bg-leaf-soft text-4xl">
+            ✓
+          </div>
+
+          <h3 className="mt-6 text-2xl font-semibold text-ink">
+            Thank You, {sent.name}!
+          </h3>
+
+          <p className="mt-3 leading-7 text-ink/70">
+            Thank you for your interest in {sent.type}.
+            Our organisation will reach out to you soon.
+          </p>
+
+          <button
+            type="button"
+            onClick={() => {
+              setSent(null)
+              setActiveForm(null)
+            }}
+            className="mt-6 rounded-full bg-leaf px-8 py-3 font-semibold text-white transition hover:bg-leaf-deep"
+          >
+            Done
+          </button>
+        </div>
+      )}
+    </div>
+  </div>
+)}
+
       </Section>
 
       <footer className="bg-ink px-4 py-12 text-white sm:px-6 sm:py-14">
