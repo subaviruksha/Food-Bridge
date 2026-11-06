@@ -106,3 +106,41 @@
 .avatar--saffron { --ring: #F29A1F; --on: #141414; }
 .avatar--tomato  { --ring: #D9482B; --on: #fff; }
 .avatar--sky     { --ring: #2A7DC0; --on: #fff; }
+
+
+
+.hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  width: 42px;
+  height: 42px;
+  padding: 9px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 5px;
+  background: #1f2937;
+}
+
+.hamburger .hamburger-close {
+  width: auto;
+  height: auto;
+  background: transparent;
+  font-size: 20px;
+}
+
+@media (max-width: 767px) {
+  .hamburger {
+    display: flex;
+  }
+}
