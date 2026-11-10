@@ -1,3 +1,4 @@
+
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { motion, animate, useInView } from 'framer-motion'
 import Community from './Community.jsx'
@@ -38,7 +39,8 @@ function Counter({ to, suffix = '', align = 'center' }) {
       ease: 'easeOut',
       onUpdate: (v) => {
         if (ref.current) {
-          ref.current.textContent = Math.round(v).toLocaleString('en-IN') + suffix
+          ref.current.textContent =
+            Math.round(v).toLocaleString('en-IN') + suffix
         }
       },
     })
@@ -47,9 +49,18 @@ function Counter({ to, suffix = '', align = 'center' }) {
   }, [seen, to, suffix])
 
   return (
-    <span className="relative inline-block whitespace-nowrap" style={{ fontVariantNumeric: 'lining-nums tabular-nums' }}>
+    <span
+      className="relative inline-block whitespace-nowrap"
+      style={{ fontVariantNumeric: 'lining-nums tabular-nums' }}
+    >
       <span aria-hidden="true" className="invisible">{final}</span>
-      <span ref={ref} aria-hidden="true" className={`absolute inset-y-0 ${align === 'left' ? 'left-0 text-left' : 'inset-x-0 text-center'}`}>
+      <span
+        ref={ref}
+        aria-hidden="true"
+        className={`absolute inset-y-0 ${
+          align === 'left' ? 'left-0 text-left' : 'inset-x-0 text-center'
+        }`}
+      >
         0{suffix}
       </span>
       <span className="sr-only">{final}</span>
@@ -59,12 +70,27 @@ function Counter({ to, suffix = '', align = 'center' }) {
 
 function Section({ id, title, lead, eyebrow, tone = 'white', children }) {
   return (
-    <section id={id} className={`relative px-4 py-16 sm:px-6 sm:py-20 md:py-28 ${tone === 'mist' ? 'bg-mist' : 'bg-white'}`}>
+    <section
+      id={id}
+      className={`relative px-4 py-16 sm:px-6 sm:py-20 md:py-28 ${
+        tone === 'mist' ? 'bg-mist' : 'bg-white'
+      }`}
+    >
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          {eyebrow && <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-ink/60">{eyebrow}</p>}
-          <h2 className="max-w-3xl text-3xl leading-[1.12] md:text-5xl">{title}</h2>
-          {lead && <p className="mt-4 max-w-2xl text-base leading-7 md:text-lg">{lead}</p>}
+          {eyebrow && (
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-ink/60">
+              {eyebrow}
+            </p>
+          )}
+          <h2 className="max-w-3xl text-3xl leading-[1.12] md:text-5xl">
+            {title}
+          </h2>
+          {lead && (
+            <p className="mt-4 max-w-2xl text-base leading-7 md:text-lg">
+              {lead}
+            </p>
+          )}
         </Reveal>
         {children}
       </div>
@@ -87,8 +113,12 @@ function ProblemPanel() {
         {!loaded && (
           <div className="absolute inset-0 grid place-items-center">
             <div className="text-center">
-              <div className="mx-auto grid h-40 w-40 place-items-center rounded-full bg-white text-7xl shadow-[0_20px_50px_rgba(20,20,20,.10)]">🍛</div>
-              <p className="mt-5 text-sm font-semibold uppercase tracking-[0.18em] text-ink/50">Good food, unused</p>
+              <div className="mx-auto grid h-40 w-40 place-items-center rounded-full bg-white text-7xl shadow-[0_20px_50px_rgba(20,20,20,.10)]">
+                🍛
+              </div>
+              <p className="mt-5 text-sm font-semibold uppercase tracking-[0.18em] text-ink/50">
+                Good food, unused
+              </p>
             </div>
           </div>
         )}
@@ -99,21 +129,33 @@ function ProblemPanel() {
           loading="lazy"
           onLoad={() => setLoaded(true)}
           onError={(e) => { e.currentTarget.style.display = 'none' }}
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
+            loaded ? 'opacity-100' : 'opacity-0'
+          }`}
         />
 
         <div className="absolute inset-x-4 bottom-4 rounded-2xl bg-white/95 p-4 shadow-lg backdrop-blur sm:inset-x-6 sm:bottom-6 sm:max-w-sm">
-          <p className="font-display text-lg leading-snug text-ink">Extra food at closing time. A hungry neighbour a few streets away.</p>
+          <p className="font-display text-lg leading-snug text-ink">
+            Extra food at closing time. A hungry neighbour a few streets away.
+          </p>
         </div>
       </Reveal>
 
       <div className="flex flex-col justify-center">
         {problemStats.map((s, i) => (
-          <Reveal key={s.n} delay={i * 0.12} className="flex items-start gap-5 border-t border-line py-7 first:border-t-0 first:pt-0 last:pb-0 sm:gap-7">
+          <Reveal
+            key={s.n}
+            delay={i * 0.12}
+            className="flex items-start gap-5 border-t border-line py-7 first:border-t-0 first:pt-0 last:pb-0 sm:gap-7"
+          >
             <span className={`mt-1 h-16 w-1.5 shrink-0 rounded-full ${s.bar}`} />
             <div>
-              <b className={`block font-display text-5xl font-normal leading-none sm:text-6xl ${s.text}`}>{s.n}</b>
-              <p className="mt-3 max-w-sm text-base leading-7 text-ink/75 sm:text-lg">{s.t}</p>
+              <b className={`block font-display text-5xl font-normal leading-none sm:text-6xl ${s.text}`}>
+                {s.n}
+              </b>
+              <p className="mt-3 max-w-sm text-base leading-7 text-ink/75 sm:text-lg">
+                {s.t}
+              </p>
             </div>
           </Reveal>
         ))}
@@ -139,9 +181,16 @@ function FeatureCard({ f, i }) {
   const [loaded, setLoaded] = useState(false)
 
   return (
-    <Reveal delay={i * 0.1} className={`${card} ${f.top} overflow-hidden border-t-[6px] transition hover:-translate-y-1.5 hover:shadow-[0_18px_40px_rgba(20,20,20,.10)]`}>
+    <Reveal
+      delay={i * 0.1}
+      className={`${card} ${f.top} overflow-hidden border-t-[6px] transition hover:-translate-y-1.5 hover:shadow-[0_18px_40px_rgba(20,20,20,.10)]`}
+    >
       <div className={`relative aspect-[4/3] w-full ${f.bg}`}>
-        {!loaded && <div className="absolute inset-0"><FeatureVisual kind={i} /></div>}
+        {!loaded && (
+          <div className="absolute inset-0">
+            <FeatureVisual kind={i} />
+          </div>
+        )}
 
         <img
           src={f.src}
@@ -149,7 +198,9 @@ function FeatureCard({ f, i }) {
           loading="lazy"
           onLoad={() => setLoaded(true)}
           onError={(e) => { e.currentTarget.style.display = 'none' }}
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
+            loaded ? 'opacity-100' : 'opacity-0'
+          }`}
         />
       </div>
 
@@ -171,6 +222,7 @@ const impact = [
 
 export default function App() {
   const [sent, setSent] = useState(null)
+  const [joinSent, setJoinSent] = useState(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const [activeForm, setActiveForm] = useState(null)
 
@@ -180,7 +232,6 @@ export default function App() {
 
       {/* Responsive Navbar */}
       <nav className="fixed inset-x-0 top-0 z-50 flex items-center justify-between border-b border-line bg-white/95 px-4 py-3 shadow-sm backdrop-blur-xl sm:px-6 sm:py-4">
-
         <a href="#top" className="shrink-0 font-display text-xl tracking-tight text-ink no-underline sm:text-2xl">
           Food<span className="text-leaf">Bridge</span>
         </a>
@@ -188,12 +239,19 @@ export default function App() {
         {/* Desktop navigation */}
         <div className="hidden items-center gap-6 md:flex">
           {[['problem', 'The problem'], ['how', 'How it works'], ['impact', 'Impact']].map(([id, l]) => (
-            <a key={id} href={`#${id}`} className="whitespace-nowrap font-medium text-ink/80 no-underline transition hover:text-ink">
+            <a
+              key={id}
+              href={`#${id}`}
+              className="whitespace-nowrap font-medium text-ink/80 no-underline transition hover:text-ink"
+            >
               {l}
             </a>
           ))}
 
-          <a href="#join" className="whitespace-nowrap rounded-full bg-leaf px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md shadow-leaf/20 transition hover:-translate-y-0.5 hover:bg-leaf-deep">
+          <a
+            href="#join"
+            className="whitespace-nowrap rounded-full bg-leaf px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-md shadow-leaf/20 transition hover:-translate-y-0.5 hover:bg-leaf-deep"
+          >
             Donate food
           </a>
         </div>
@@ -243,8 +301,14 @@ export default function App() {
 
       <header id="top" className="relative flex min-h-[100svh] flex-col overflow-hidden bg-[#FBFAF7]">
         <div className="relative z-10 mx-auto w-full max-w-6xl px-4 pt-24 sm:px-6 sm:pt-28">
-          <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="mb-5 inline-flex max-w-full items-center gap-3 rounded-full border border-line bg-white px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink shadow-sm sm:text-xs sm:tracking-[0.2em]">
-            <span className="h-2 w-2 animate-pulse rounded-full bg-leaf" /> Food rescue network · Coimbatore
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="mb-5 inline-flex max-w-full items-center gap-3 rounded-full border border-line bg-white px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink shadow-sm sm:text-xs sm:tracking-[0.2em]"
+          >
+            <span className="h-2 w-2 animate-pulse rounded-full bg-leaf" />
+            Food rescue network · Coimbatore
           </motion.div>
 
           <motion.h1
@@ -256,19 +320,41 @@ export default function App() {
             A better route for <span className="text-leaf">good food.</span>
           </motion.h1>
 
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5, duration: 1 }} className="mt-5 max-w-[600px] text-base leading-7 text-ink/75 sm:text-lg sm:leading-8">
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 1 }}
+            className="mt-5 max-w-[600px] text-base leading-7 text-ink/75 sm:text-lg sm:leading-8"
+          >
             FoodBridge connects surplus food with nearby communities through a coordinated network of donors, local organisations and volunteers.
           </motion.p>
 
           <div className="mt-7 flex flex-col gap-3 min-[420px]:flex-row min-[420px]:flex-wrap sm:gap-4">
-            <a href="#join" className="rounded-full bg-leaf px-7 py-3.5 text-center font-semibold text-white no-underline shadow-lg shadow-leaf/20 transition hover:-translate-y-0.5 hover:bg-leaf-deep sm:px-8">Donate surplus food</a>
-            <a href="#how" className="rounded-full border-2 border-ink bg-white px-7 py-3 text-center font-semibold text-ink no-underline transition hover:bg-ink hover:text-white sm:px-8">See how it works</a>
+            <a
+              href="#join"
+              className="rounded-full bg-leaf px-7 py-3.5 text-center font-semibold text-white no-underline shadow-lg shadow-leaf/20 transition hover:-translate-y-0.5 hover:bg-leaf-deep sm:px-8"
+            >
+              Donate surplus food
+            </a>
+            <a
+              href="#how"
+              className="rounded-full border-2 border-ink bg-white px-7 py-3 text-center font-semibold text-ink no-underline transition hover:bg-ink hover:text-white sm:px-8"
+            >
+              See how it works
+            </a>
           </div>
 
           <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2">
-            <p className="text-ink/75"><b className="font-display text-3xl font-normal text-saffron-deep"><Counter to={48200} align="left" /></b> meals rescued and counting</p>
+            <p className="text-ink/75">
+              <b className="font-display text-3xl font-normal text-saffron-deep">
+                <Counter to={48200} align="left" />
+              </b>
+              {' '}meals rescued and counting
+            </p>
             <span className="hidden h-8 w-px bg-ink/15 sm:block" />
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink/60">From surplus to someone’s next meal</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink/60">
+              From surplus to someone’s next meal
+            </p>
           </div>
         </div>
 
@@ -277,25 +363,45 @@ export default function App() {
         </div>
       </header>
 
-      <Section id="problem" tone="white" title="Good food is often left over. Nearby, people still need a meal." lead="Restaurants can have safe food left at the end of the day, while local communities need support. FoodBridge is designed to help them find each other.">
+      <Section
+        id="problem"
+        tone="white"
+        title="Good food is often left over. Nearby, people still need a meal."
+        lead="Restaurants can have safe food left at the end of the day, while local communities need support. FoodBridge is designed to help them find each other."
+      >
         <ProblemPanel />
       </Section>
 
       <section id="solution" className="relative bg-mist px-4 py-16 sm:px-6 sm:py-20 md:py-28">
         <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
           <Reveal>
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-ink/60">The idea</p>
-            <h2 className="text-3xl leading-[1.12] md:text-5xl">A simple way to get extra food where it’s needed.</h2>
-            <p className="mt-5 max-w-lg text-base leading-8 md:text-lg">A donor shares what food is available. A nearby organisation can request it, and a volunteer helps arrange collection.</p>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-ink/60">
+              The idea
+            </p>
+            <h2 className="text-3xl leading-[1.12] md:text-5xl">
+              A simple way to get extra food where it’s needed.
+            </h2>
+            <p className="mt-5 max-w-lg text-base leading-8 md:text-lg">
+              A donor shares what food is available. A nearby organisation can request it, and a volunteer helps arrange collection.
+            </p>
           </Reveal>
 
           <div className="relative grid gap-4">
-            <span aria-hidden="true" className="absolute bottom-10 left-[39px] top-10 hidden w-px border-l-2 border-dashed border-ink/20 sm:block" />
+            <span
+              aria-hidden="true"
+              className="absolute bottom-10 left-[39px] top-10 hidden w-px border-l-2 border-dashed border-ink/20 sm:block"
+            />
             {roles.map((r, i) => (
               <Reveal key={r.n} delay={i * 0.12}>
                 <div className={`${card} relative flex items-center gap-5 border-l-[6px] p-5 sm:p-6 ${r.ring}`}>
-                  <span className={`grid h-14 w-14 shrink-0 place-items-center rounded-2xl text-3xl ${r.chip}`}>{r.ic}</span>
-                  <p className="text-lg leading-7 text-ink"><b className="font-display text-xl font-normal">{r.who}</b><br /><span className="text-muted">{r.does}</span></p>
+                  <span className={`grid h-14 w-14 shrink-0 place-items-center rounded-2xl text-3xl ${r.chip}`}>
+                    {r.ic}
+                  </span>
+                  <p className="text-lg leading-7 text-ink">
+                    <b className="font-display text-xl font-normal">{r.who}</b>
+                    <br />
+                    <span className="text-muted">{r.does}</span>
+                  </p>
                   <span className="ml-auto font-display text-4xl text-ink/15">{r.n}</span>
                 </div>
               </Reveal>
@@ -304,36 +410,67 @@ export default function App() {
         </div>
       </section>
 
-      <Section id="how" tone="white" title="How a food donation gets delivered" lead="Follow the steps from the first listing to the meal being served.">
-        <Suspense fallback={null}><How3D /></Suspense>
+      <Section
+        id="how"
+        tone="white"
+        title="How a food donation gets delivered"
+        lead="Follow the steps from the first listing to the meal being served."
+      >
+        <Suspense fallback={null}>
+          <How3D />
+        </Suspense>
       </Section>
 
       <Section id="features" tone="mist" title="A few ways FoodBridge can help">
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {features.map((f, i) => <FeatureCard key={f.h} f={f} i={i} />)}
+          {features.map((f, i) => (
+            <FeatureCard key={f.h} f={f} i={i} />
+          ))}
         </div>
       </Section>
 
-      <Section id="community" tone="white" title="FoodBridge Help Session" lead="Step into the community mission room: join a local rescue drive, sponsor meals, and follow food moving towards the people who need it.">
+      <Section
+        id="community"
+        tone="white"
+        title="FoodBridge Help Session"
+        lead="Step into the community mission room: join a local rescue drive, sponsor meals, and follow food moving towards the people who need it."
+      >
         <Community />
       </Section>
 
-      <Section id="impact" tone="mist" title="The difference food sharing can make" lead="Example impact figures for the FoodBridge concept.">
+      <Section
+        id="impact"
+        tone="mist"
+        title="The difference food sharing can make"
+        lead="Example impact figures for the FoodBridge concept."
+      >
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {impact.map(([n, s, l, text, border]) => (
             <Reveal key={l} className={`${card} border-b-[6px] ${border} p-8 text-center`}>
-              <b className={`font-display text-5xl font-normal ${text}`}><Counter to={n} suffix={s} /></b>
+              <b className={`font-display text-5xl font-normal ${text}`}>
+                <Counter to={n} suffix={s} />
+              </b>
               <p className="mt-2 text-ink/75">{l}</p>
             </Reveal>
           ))}
         </div>
       </Section>
 
-      <Section id="stories" tone="white" title="Community stories" lead="Meet the people a single donation can reach: the donor, the volunteer and the shelter.">
+      <Section
+        id="stories"
+        tone="white"
+        title="Community stories"
+        lead="Meet the people a single donation can reach: the donor, the volunteer and the shelter."
+      >
         <StoriesPhone />
       </Section>
 
-      <Section id="join" tone="mist" title="Would you like to take part?" lead="Choose how you’d like to help, or send us a food donation alert.">
+      <Section
+        id="join"
+        tone="mist"
+        title="Would you like to take part?"
+        lead="Choose how you’d like to help, or send us a food donation alert."
+      >
         <div className="mt-12 grid gap-6 lg:grid-cols-2">
 
           {/* Volunteer and Partner cards */}
@@ -347,7 +484,10 @@ export default function App() {
                 <p className="mb-4 mt-1">{p}</p>
                 <button
                   type="button"
-                  onClick={() => setActiveForm(h)}
+                  onClick={() => {
+                    setJoinSent(null)
+                    setActiveForm(h)
+                  }}
                   className="inline-block rounded-full border-2 border-ink px-6 py-2 font-semibold text-ink no-underline transition hover:bg-ink hover:text-white"
                 >
                   Get in touch
@@ -376,125 +516,146 @@ export default function App() {
                 className="grid gap-4"
               >
                 <h3 className="text-2xl">Quick donation</h3>
-                {[['name', 'Your name', 'Priya Kumar'], ['food', 'What’s available?', '40 plates of veg biryani'], ['area', 'Pickup area', 'RS Puram, Coimbatore']].map(([key, l, ph]) => (
-                  <label key={key} className="text-sm font-semibold text-ink">{l}
-                    <input required name={key} placeholder={ph} className="mt-1 w-full rounded-xl px-4 py-3 text-base font-normal" />
+                {[
+                  ['name', 'Your name', 'Priya Kumar'],
+                  ['food', 'What’s available?', '40 plates of veg biryani'],
+                  ['area', 'Pickup area', 'RS Puram, Coimbatore'],
+                ].map(([key, l, ph]) => (
+                  <label key={key} className="text-sm font-semibold text-ink">
+                    {l}
+                    <input
+                      required
+                      name={key}
+                      placeholder={ph}
+                      className="mt-1 w-full rounded-xl px-4 py-3 text-base font-normal"
+                    />
                   </label>
                 ))}
-                <button className="rounded-full bg-leaf px-8 py-3.5 font-semibold text-white shadow-lg shadow-leaf/20 transition hover:-translate-y-0.5 hover:bg-leaf-deep">Send donation alert</button>
+                <button
+                  type="submit"
+                  className="rounded-full bg-leaf px-8 py-3.5 font-semibold text-white shadow-lg shadow-leaf/20 transition hover:-translate-y-0.5 hover:bg-leaf-deep"
+                >
+                  Send donation alert
+                </button>
               </form>
             )}
           </Reveal>
         </div>
 
-       {/* Volunteer / Partner Form */}
-{activeForm && (
-  <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 px-4 backdrop-blur-sm">
-    <div className="w-full max-w-md rounded-3xl bg-white p-7 shadow-2xl">
+        {/* Volunteer / Partner Form */}
+        {activeForm && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 px-4 backdrop-blur-sm">
+            <div className="w-full max-w-md rounded-3xl bg-white p-7 shadow-2xl">
 
-      {!sent ? (
-        <>
-          <div className="mb-5 flex items-center justify-between">
-            <h3 className="text-2xl font-semibold text-ink">
-              {activeForm}
-            </h3>
+              {!joinSent ? (
+                <>
+                  <div className="mb-5 flex items-center justify-between">
+                    <h3 className="text-2xl font-semibold text-ink">
+                      {activeForm}
+                    </h3>
 
-            <button
-              type="button"
-              onClick={() => setActiveForm(null)}
-              className="text-2xl text-ink/60 hover:text-ink"
-            >
-              ×
-            </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveForm(null)
+                        setJoinSent(null)
+                      }}
+                      className="text-2xl text-ink/60 hover:text-ink"
+                    >
+                      ×
+                    </button>
+                  </div>
+
+                  <p className="mb-5 text-sm leading-6 text-ink/65">
+                    Share your details and become a part of FoodBridge.
+                  </p>
+
+                  <form
+                    className="grid gap-4"
+                    onSubmit={(e) => {
+                      e.preventDefault()
+
+                      const f = new FormData(e.currentTarget)
+
+                      setJoinSent({
+                        name: String(f.get('name') || ''),
+                        type: activeForm,
+                      })
+                    }}
+                  >
+                    <label className="text-sm font-semibold text-ink">
+                      Your Name
+                      <input
+                        type="text"
+                        name="name"
+                        required
+                        placeholder="Enter your name"
+                        className="mt-2 w-full rounded-xl border border-line px-4 py-3 font-normal"
+                      />
+                    </label>
+
+                    <label className="text-sm font-semibold text-ink">
+                      Gmail Address
+                      <input
+                        type="email"
+                        name="email"
+                        required
+                        pattern="[a-zA-Z0-9._%+-]+@gmail\.com"
+                        title="Please enter a valid Gmail address"
+                        placeholder="example@gmail.com"
+                        className="mt-2 w-full rounded-xl border border-line px-4 py-3 font-normal"
+                      />
+                    </label>
+
+                    <button
+                      type="submit"
+                      className="mt-2 rounded-full bg-leaf px-6 py-3 font-semibold text-white shadow-md transition hover:bg-leaf-deep"
+                    >
+                      Submit
+                    </button>
+                  </form>
+                </>
+              ) : (
+                <div className="py-8 text-center">
+                  <div className="mx-auto grid h-20 w-20 place-items-center rounded-full bg-leaf-soft text-4xl">
+                    ✓
+                  </div>
+
+                  <h3 className="mt-6 text-2xl font-semibold text-ink">
+                    Thank You, {joinSent.name}!
+                  </h3>
+
+                  <p className="mt-3 leading-7 text-ink/70">
+                    Thank you for your interest in {joinSent.type}.
+                    Our organisation will reach out to you soon.
+                  </p>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setJoinSent(null)
+                      setActiveForm(null)
+                    }}
+                    className="mt-6 rounded-full bg-leaf px-8 py-3 font-semibold text-white transition hover:bg-leaf-deep"
+                  >
+                    Done
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
-
-          <p className="mb-5 text-sm leading-6 text-ink/65">
-            Share your details and become a part of FoodBridge.
-          </p>
-
-          <form
-            className="grid gap-4"
-            onSubmit={(e) => {
-              e.preventDefault()
-
-              const f = new FormData(e.currentTarget)
-
-              setSent({
-                name: String(f.get('name') || ''),
-                type: activeForm,
-              })
-            }}
-          >
-            <label className="text-sm font-semibold text-ink">
-              Your Name
-              <input
-                type="text"
-                name="name"
-                required
-                placeholder="Enter your name"
-                className="mt-2 w-full rounded-xl border border-line px-4 py-3 font-normal"
-              />
-            </label>
-
-            <label className="text-sm font-semibold text-ink">
-              Gmail Address
-              <input
-                type="email"
-                name="email"
-                required
-                pattern="[a-zA-Z0-9._%+-]+@gmail\.com"
-                title="Please enter a valid Gmail address"
-                placeholder="example@gmail.com"
-                className="mt-2 w-full rounded-xl border border-line px-4 py-3 font-normal"
-              />
-            </label>
-
-            <button
-              type="submit"
-              className="mt-2 rounded-full bg-leaf px-6 py-3 font-semibold text-white shadow-md transition hover:bg-leaf-deep"
-            >
-              Submit
-            </button>
-          </form>
-        </>
-      ) : (
-        <div className="py-8 text-center">
-          <div className="mx-auto grid h-20 w-20 place-items-center rounded-full bg-leaf-soft text-4xl">
-            ✓
-          </div>
-
-          <h3 className="mt-6 text-2xl font-semibold text-ink">
-            Thank You, {sent.name}!
-          </h3>
-
-          <p className="mt-3 leading-7 text-ink/70">
-            Thank you for your interest in {sent.type}.
-            Our organisation will reach out to you soon.
-          </p>
-
-          <button
-            type="button"
-            onClick={() => {
-              setSent(null)
-              setActiveForm(null)
-            }}
-            className="mt-6 rounded-full bg-leaf px-8 py-3 font-semibold text-white transition hover:bg-leaf-deep"
-          >
-            Done
-          </button>
-        </div>
-      )}
-    </div>
-  </div>
-)}
-
+        )}
       </Section>
 
       <footer className="bg-ink px-4 py-12 text-white sm:px-6 sm:py-14">
         <div className="mx-auto grid max-w-6xl gap-8 sm:grid-cols-2 md:grid-cols-4">
           <div className="md:col-span-2">
-            <a href="#top" className="font-display text-2xl tracking-tight text-white no-underline">Food<span className="text-[#5FD39A]">Bridge</span></a>
-            <p className="mt-3 max-w-sm text-white/70">Helping good food reach people who can use it.</p>
+            <a href="#top" className="font-display text-2xl tracking-tight text-white no-underline">
+              Food<span className="text-[#5FD39A]">Bridge</span>
+            </a>
+            <p className="mt-3 max-w-sm text-white/70">
+              Helping good food reach people who can use it.
+            </p>
           </div>
 
           <div>
@@ -516,7 +677,9 @@ export default function App() {
           </div>
         </div>
 
-        <p className="mx-auto mt-10 max-w-6xl border-t border-white/15 pt-6 text-sm text-white/55">© 2026 FoodBridge.</p>
+        <p className="mx-auto mt-10 max-w-6xl border-t border-white/15 pt-6 text-sm text-white/55">
+          © 2026 FoodBridge.
+        </p>
       </footer>
     </>
   )
